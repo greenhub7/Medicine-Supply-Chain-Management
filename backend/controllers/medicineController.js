@@ -85,11 +85,52 @@ exports.getMedicineById = async (req, res) => {
 // @desc   Get medicine history (transactions)
 exports.getMedicineHistory = async (req, res) => {
   try {
-    const transactions = await Transaction.find({ medicineId: req.params.id }).sort({ timestamp: -1 });
+    const medicines = await Medicine.find(); // Fetch all medicines
 
-    res.json(transactions);
+    if (medicines.length === 0) {
+      return res.status(404).json({ error: "No medicines found" });
+    }
+
+    res.json(medicines);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching medicine history" });
+    console.error("Error fetching medicines:", error);
+    res.status(500).json({ error: "Error fetching medicines" });
+  }
+};
+
+exports.assignParticipantToMedicine = async (req, res) => {
+  try {
+    const { medicineId, participantAddress, role } = req.body;
+
+    if (!medicineId || !participantAddress || !role) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    // Find medicine
+    const medicine = await Medicine.findOne({ blockchainId: medicineId });
+    if (!medicine) {
+      return res.status(404).json({ error: "Medicine not found" });
+    }
+
+    // Find participant
+    const participant = await Participant.findOne({ address: participantAddress, role });
+    if (!participant) {
+      return res.status(404).json({ error: `${role} not found` });
+    }
+
+    // Assign participant to medicine
+    if (role === "Supplier") medicine.supplier = participantAddress;
+    else if (role === "Manufacturer") medicine.manufacturer = participantAddress;
+    else if (role === "Distributor") medicine.distributor = participantAddress;
+    else if (role === "Retailer") medicine.retailer = participantAddress;
+
+    await medicine.save();
+
+    res.status(200).json({ message: `${role} assigned to medicine successfully`, medicine });
+
+  } catch (error) {
+    console.error("Error assigning participant:", error);
+    res.status(500).json({ error: error.message });
   }
 };
 
