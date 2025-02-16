@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { addMedicine, getMedicineStage } = require("../controllers/medicineController");
+const { addMedicine, getMedicineById, getMedicineHistory, getMedicineStage } = require("../controllers/medicineController");
 
 router.post("/add", addMedicine);
-router.get("/stage/:medicineId", getMedicineStage);
+router.get("/", getMedicineHistory);
+router.get("/:id", getMedicineById);
+router.get("/stage/:id", getMedicineStage);
 
 module.exports = router;
