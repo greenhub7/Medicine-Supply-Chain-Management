@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const MedicineSchema = new mongoose.Schema({
   blockchainId: { type: Number, required: true, unique: true },
@@ -8,7 +8,11 @@ const MedicineSchema = new mongoose.Schema({
   manufacturer: { type: String, default: null },
   distributor: { type: String, default: null },
   retailer: { type: String, default: null },
-  stage: { type: String, required: true },
+  stage: {
+    type: String,
+    enum: ["Ordered", "RawMaterialSupplied", "Manufactured", "Distributed", "Retail", "Sold"],
+    required: true,
+  },
   batchNumber: { type: String },
   manufacturingDate: { type: Date },
   expiryDate: { type: Date },
@@ -17,4 +21,4 @@ const MedicineSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Medicine', MedicineSchema);
+module.exports = mongoose.model("Medicine", MedicineSchema);

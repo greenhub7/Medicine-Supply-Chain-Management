@@ -1,8 +1,14 @@
 const express = require("express");
+const {
+  addTransaction,
+  getAllTransactions,
+  getTransactionHistory,
+} = require("../controllers/transactionController");
+
 const router = express.Router();
-const { addTransaction, getMedicineHistory } = require("../controllers/transactionController");
 
 router.post("/add", addTransaction);
-router.get("/history/:id", getMedicineHistory);
+router.get("/", getAllTransactions);
+router.get("/:id/history", getTransactionHistory);
 
 module.exports = router;

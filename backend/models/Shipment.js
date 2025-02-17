@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 
-const shipmentSchema = new mongoose.Schema({
-  medicine: { type: Number, required: true },
-  sender: { type: mongoose.Schema.Types.ObjectId, ref: "Participant", required: true },
-  receiver: { type: mongoose.Schema.Types.ObjectId, ref: "Participant", required: true },
-  status: { type: String, enum: ["In Transit", "Delivered"], default: "In Transit" },
+const ShipmentSchema = new mongoose.Schema({
+  medicineId: { type: Number, required: true },
+  sender: { type: String, required: true }, // Ethereum address
+  receiver: { type: String, required: true }, // Ethereum address
   trackingId: { type: String, required: true, unique: true },
+  status: {
+    type: String,
+    enum: ["Pending", "InTransit", "Delivered"],
+    default: "Pending",
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Shipment", shipmentSchema);
+module.exports = mongoose.model("Shipment", ShipmentSchema);

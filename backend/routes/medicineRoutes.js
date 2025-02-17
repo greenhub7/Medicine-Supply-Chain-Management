@@ -1,11 +1,16 @@
 const express = require("express");
+const {
+  addMedicine,
+  getAllMedicines,
+  getMedicineHistory,
+  getMedicineStage,
+} = require("../controllers/medicineController");
+
 const router = express.Router();
-const { addMedicine, getMedicineById, getMedicineHistory, getMedicineStage, assignParticipantToMedicine } = require("../controllers/medicineController");
 
 router.post("/add", addMedicine);
-router.get("/", getMedicineHistory);
-router.get("/:id", getMedicineById);
-router.get("/stage/:id", getMedicineStage);
-router.post("/medicines/assign", assignParticipantToMedicine);
+router.get("/", getAllMedicines);
+router.get("/:id/history", getMedicineHistory);
+router.get("/:id/stage", getMedicineStage);
 
 module.exports = router;

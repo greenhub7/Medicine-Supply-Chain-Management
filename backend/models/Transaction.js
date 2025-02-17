@@ -1,15 +1,20 @@
 const mongoose = require("mongoose");
 
-const transactionSchema = new mongoose.Schema({
+const TransactionSchema = new mongoose.Schema({
   medicineId: { type: Number, required: true },
-  transactionType: { type: String, enum: ["MEDICINE_CREATED", "TRANSFER_MEDICINE"], required: true },
-  transactionHash: { type: String, required: true },
-  details: {
-    from: { type: mongoose.Schema.Types.ObjectId, ref: "Participant", default: null },
-    to: { type: mongoose.Schema.Types.ObjectId, ref: "Participant", default: null },
-    status: { type: String, enum: ["Shipped", "Received", "In Transit", "Completed"], default: "Shipped" },
+  participant: { type: String, required: true }, // Ethereum address
+  action: {
+    type: String,
+    enum: [
+      "Raw Material Supplied",
+      "Manufactured",
+      "Distributed",
+      "Available for Sale",
+      "Sold",
+    ],
+    required: true,
   },
   timestamp: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Transaction", transactionSchema);
+module.exports = mongoose.model("Transaction", TransactionSchema);

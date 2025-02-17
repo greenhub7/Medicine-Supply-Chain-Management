@@ -1,8 +1,9 @@
 const express = require("express");
-const router = express.Router();
 const { addParticipant, getAllParticipants } = require("../controllers/participantController");
 
-router.post("/register", addParticipant);
+const router = express.Router();
+
+router.post("/add", addParticipant);
 router.get("/", getAllParticipants);
 
 module.exports = router;

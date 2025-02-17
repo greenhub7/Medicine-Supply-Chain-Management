@@ -10,43 +10,12 @@ exports.addParticipant = async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    const nonce = await web3js.eth.getTransactionCount(address);
-    const gasPrice = await web3js.eth.getGasPrice();
-
-    let addFunction;
-    switch (role.toLowerCase()) {
-      case "supplier":
-        addFunction = contract.methods.addSupplier;
-        break;
-      case "manufacturer":
-        addFunction = contract.methods.addManufacturer;
-        break;
-      case "distributor":
-        addFunction = contract.methods.addDistributor;
-        break;
-      case "retailer":
-        addFunction = contract.methods.addRetailer;
-        break;
-      default:
-        return res.status(400).json({ error: "Invalid participant role" });
-    }
-
-    const tx = {
-      from: address,
-      to: contract.options.address,
-      gas: 2000000,
-      gasPrice: gasPrice,
-      nonce: nonce,
-      data: addFunction(address, name, location).encodeABI(),
-    };
-
-    const signedTx = await web3js.eth.accounts.signTransaction(tx, process.env.OWNER_PRIVATE_KEY);
-    const receipt = await web3js.eth.sendSignedTransaction(signedTx.rawTransaction);
-
+    // Save participant in MongoDB
     const participant = new Participant({ name, role, location, address });
     await participant.save();
 
-    res.status(201).json({ message: "Participant registered", participant, transactionHash: receipt.transactionHash });
+    res.status(201).json({ message: "Participant registered", participant });
+
   } catch (error) {
     console.error("Error adding participant:", error);
     res.status(500).json({ error: "Error adding participant" });
