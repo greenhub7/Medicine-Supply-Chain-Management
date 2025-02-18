@@ -27,6 +27,21 @@ exports.createShipment = async (req, res) => {
   }
 };
 
+exports.updateShipmentStatus = async (req, res) => {
+  try {
+      const { trackingId, status } = req.body;
+      const shipment = await Shipment.findOne({ trackingId });
+      if (!shipment) {
+          return res.status(404).json({ message: 'Shipment not found' });
+      }
+      shipment.status = status;
+      await shipment.save();
+      res.status(200).json({ message: 'Shipment status updated successfully', shipment });
+  } catch (error) {
+      res.status(500).json({ message: 'Error updating shipment status', error });
+  }
+};
+
 // @desc   Get all shipments
 exports.getAllShipments = async (req, res) => {
   try {

@@ -2,12 +2,19 @@ const Medicine = require("../models/Medicine");
 const Transaction = require("../models/Transaction");
 const { web3js, contract } = require("../config/web3");
 
+const ownerAddress = process.env.OWNER_ADDRESS;
+
+if (!ownerAddress) {
+  console.error("❌ OWNER_ADDRESS is not defined in environment variables");
+  process.exit(1);
+}
+
 // @desc   Add medicine to Blockchain & MongoDB
 exports.addMedicine = async (req, res) => {
   try {
-    const { name, description, ownerAddress, batchNumber, manufacturingDate, expiryDate, price } = req.body;
+    const { id, name, description } = req.body;
 
-    if (!name || !description || !ownerAddress) {
+    if (!name || !description || !id) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -40,10 +47,6 @@ exports.addMedicine = async (req, res) => {
       blockchainId: parseInt(medicineCounter),
       name,
       description,
-      batchNumber,
-      manufacturingDate,
-      expiryDate,
-      price,
       stage: "Ordered",
     });
 
@@ -91,11 +94,22 @@ exports.getMedicineHistory = async (req, res) => {
 // @desc   Get medicine stage from Blockchain
 exports.getMedicineStage = async (req, res) => {
   try {
-    const { medicineId } = req.params;
-    const stage = await contract.methods.getMedicineStage(medicineId).call();
-    res.json({ medicineId, stage });
+    const medicineId = req.params.id;
+
+    if (!medicineId) {
+      return res.status(400).json({ error: "Medicine ID is required" });
+    }
+
+    const medicineIdNum = parseInt(medicineId);
+
+    if (isNaN(medicineIdNum)) {
+      return res.status(400).json({ error: "Invalid Medicine ID" });
+    }
+
+    const stage = await contract.methods.getMedicineStage(medicineIdNum).call();
+    res.json({ medicineId: medicineIdNum, stage });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error fetching medicine stage" });
+    res.status(500).json({ error: "Error fetching medicine stage", details: error.message });
   }
 };

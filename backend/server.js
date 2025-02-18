@@ -8,7 +8,6 @@ const medicineRoutes = require("./routes/medicineRoutes");
 const participantRoutes = require("./routes/participantRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
 const shipmentRoutes = require("./routes/shipmentRoutes");
-const contractEventRoutes = require("./routes/contractEventRoutes")
 
 // Load environment variables
 dotenv.config();
@@ -26,7 +25,6 @@ app.use("/api/medicines", medicineRoutes);
 app.use("/api/participants", participantRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/shipments", shipmentRoutes);
-app.use("/api/contract-events", contractEventRoutes)
 
 // Root Route
 app.get("/", (req, res) => {
