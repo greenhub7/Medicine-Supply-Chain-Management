@@ -9,7 +9,8 @@ const Home = () => {
       </p>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <Link to="/add-medicine" className="bg-blue-500 text-white p-3 rounded">Add Medicine</Link>
-        <Link to="/medicines" className="bg-green-500 text-white p-3 rounded">View Medicines</Link>
+        <Link to="/medicines" className="bg-green-500 text-white p-3 rounded">View Medicine List</Link>
+        <Link to="/medicine-details" className="bg-green-500 text-white p-3 rounded">View Medicine Details</Link>
         <Link to="/participants" className="bg-purple-500 text-white p-3 rounded">View Participants</Link>
         <Link to="/transactions" className="bg-yellow-500 text-black p-3 rounded">View Transactions</Link>
         <Link to="/shipments" className="bg-red-500 text-white p-3 rounded">View Shipments</Link>

@@ -11,10 +11,6 @@ const Medicine = () => {
     name: "",
     description: "",
     ownerAddress: "",
-    batchNumber: "",
-    manufacturingDate: "",
-    expiryDate: "",
-    price: "",
   });
 
   useEffect(() => {
@@ -30,26 +26,22 @@ const Medicine = () => {
     }
   };
 
-  const handleAddMedicine = async (e) => {
-    e.preventDefault();
-    try {
-      await addMedicine(formData);
-      toast.success("Medicine added successfully!");
-      fetchMedicines();
-      setFormData({
-        name: "",
-        description: "",
-        ownerAddress: "",
-        batchNumber: "",
-        manufacturingDate: "",
-        expiryDate: "",
-        price: "",
-      });
-    } catch (error) {
-      toast.error("Error adding medicine");
-      console.error(error);
-    }
-  };
+  // const handleAddMedicine = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await addMedicine(formData);
+  //     toast.success("Medicine added successfully!");
+  //     fetchMedicines();
+  //     setFormData({
+  //       name: "",
+  //       description: "",
+  //       ownerAddress: "",
+  //     });
+  //   } catch (error) {
+  //     toast.error("Error adding medicine");
+  //     console.error(error);
+  //   }
+  // };
 
   const handleGetHistory = async () => {
     try {
@@ -72,25 +64,6 @@ const Medicine = () => {
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">Manage Medicines</h2>
-
-      {/* Medicine Form */}
-      <form onSubmit={handleAddMedicine} className="space-y-4 mb-6">
-        <input type="text" placeholder="Name" className="border p-2 w-full"
-          value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
-        <input type="text" placeholder="Description" className="border p-2 w-full"
-          value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
-        <input type="text" placeholder="Owner Address" className="border p-2 w-full"
-          value={formData.ownerAddress} onChange={(e) => setFormData({ ...formData, ownerAddress: e.target.value })} required />
-        <input type="text" placeholder="Batch Number" className="border p-2 w-full"
-          value={formData.batchNumber} onChange={(e) => setFormData({ ...formData, batchNumber: e.target.value })} />
-        <input type="date" placeholder="Manufacturing Date" className="border p-2 w-full"
-          value={formData.manufacturingDate} onChange={(e) => setFormData({ ...formData, manufacturingDate: e.target.value })} />
-        <input type="date" placeholder="Expiry Date" className="border p-2 w-full"
-          value={formData.expiryDate} onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })} />
-        <input type="number" placeholder="Price" className="border p-2 w-full"
-          value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} />
-        <button type="submit" className="bg-blue-500 text-white p-2 w-full">Add Medicine</button>
-      </form>
 
       {/* Medicine List */}
       <h3 className="text-xl font-bold mb-2">Medicine List</h3>

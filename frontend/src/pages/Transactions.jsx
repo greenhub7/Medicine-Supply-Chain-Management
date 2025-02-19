@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
-import { addTransaction, getAllTransactions, getTransactionHistory } from "../services/api";
+import { recordTransaction, getTransactions } from "../services/api";
 import { toast } from "react-toastify";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [medicineId, setMedicineId] = useState("");
-  const [transactionHistory, setTransactionHistory] = useState([]);
   const [formData, setFormData] = useState({
     medicineId: "",
-    from: "",
-    to: "",
+    participant: "",
     action: "",
+    timestamp: Date.now(),
   });
 
   useEffect(() => {
@@ -19,7 +18,7 @@ const Transactions = () => {
 
   const fetchTransactions = async () => {
     try {
-      const response = await getAllTransactions();
+      const response = await getTransactions();
       setTransactions(response.data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -29,29 +28,29 @@ const Transactions = () => {
   const handleAddTransaction = async (e) => {
     e.preventDefault();
     try {
-      await addTransaction(formData);
-      toast.success("Transaction recorded successfully!");
+      await recordTransaction(formData);
       fetchTransactions();
       setFormData({
         medicineId: "",
-        from: "",
-        to: "",
+        participant: "",
         action: "",
+        timestamp: Date.now(),
       });
+      toast.success("Transaction recorded successfully!");
     } catch (error) {
       toast.error("Error adding transaction");
       console.error(error);
     }
   };
 
-  const handleGetHistory = async () => {
-    try {
-      const response = await getTransactionHistory(medicineId);
-      setTransactionHistory(response.data);
-    } catch (error) {
-      toast.error("Error fetching transaction history");
-    }
-  };
+  // const handleGetHistory = async () => {
+  //   try {
+  //     const response = await getTransactionHistory(medicineId);
+  //     setTransactionHistory(response.data);
+  //   } catch (error) {
+  //     toast.error("Error fetching transaction history");
+  //   }
+  // };
 
   return (
     <div className="container mx-auto p-6">
@@ -69,20 +68,20 @@ const Transactions = () => {
         />
         <input
           type="text"
-          placeholder="Sender Address"
+          placeholder="Participant Adress"
           className="border p-2 w-full"
-          value={formData.from}
-          onChange={(e) => setFormData({ ...formData, from: e.target.value })}
+          value={formData.participant}
+          onChange={(e) => setFormData({ ...formData, participant: e.target.value })}
           required
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Receiver Address"
           className="border p-2 w-full"
           value={formData.to}
           onChange={(e) => setFormData({ ...formData, to: e.target.value })}
           required
-        />
+        /> */}
         <select
           className="border p-2 w-full"
           value={formData.action}
@@ -116,38 +115,6 @@ const Transactions = () => {
           ))
         )}
       </ul>
-
-      {/* Transaction History */}
-      <div className="mt-6">
-        <h3 className="text-xl font-bold mb-2">Transaction History</h3>
-        <div className="flex space-x-2">
-          <input
-            type="text"
-            placeholder="Enter Medicine ID"
-            className="border p-2 w-full"
-            value={medicineId}
-            onChange={(e) => setMedicineId(e.target.value)}
-            required
-          />
-          <button onClick={handleGetHistory} className="bg-green-500 text-white p-2">
-            Get History
-          </button>
-        </div>
-
-        <ul className="mt-4 space-y-2">
-          {transactionHistory.length === 0 ? (
-            <p>No transaction history found.</p>
-          ) : (
-            transactionHistory.map((txn, index) => (
-              <li key={index} className="border p-3">
-                <p><strong>Action:</strong> {txn.action}</p>
-                <p><strong>Participant:</strong> {txn.participant}</p>
-                <p><strong>Timestamp:</strong> {new Date(txn.timestamp).toLocaleString()}</p>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
     </div>
   );
 };

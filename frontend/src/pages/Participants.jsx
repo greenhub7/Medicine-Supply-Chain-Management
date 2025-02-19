@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addParticipant, getParticipants } from "../services/api";
+import { addParticipant, getAllParticipants } from "../services/api";
 import { toast } from "react-toastify";
 
 const Participants = () => {
@@ -17,7 +17,7 @@ const Participants = () => {
 
   const fetchParticipants = async () => {
     try {
-      const response = await getParticipants();
+      const response = await getAllParticipants();
       setParticipants(response.data);
     } catch (error) {
       console.error("Error fetching participants:", error);

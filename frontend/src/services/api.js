@@ -10,16 +10,17 @@ export const getMedicineStage = (medicineId) => axios.get(`${API_URL}/medicines/
 
 // Participants
 export const addParticipant = (participantData) => axios.post(`${API_URL}/participants/add`, participantData);
-export const getParticipants = () => axios.get(`${API_URL}/participants/`);
+export const getAllParticipants = () => axios.get(`${API_URL}/participants/`);
 
 // Transactions
-export const addTransaction = (transactionData) => axios.post(`${API_URL}/transactions/add`, transactionData);
-export const getAllTransactions = () => axios.get(`${API_URL}/transactions/`);
-export const getTransactionHistory = (medicineId) => axios.get(`${API_URL}/transactions/${medicineId}/history`);
+export const recordTransaction = (transactionData) => axios.post(`${API_URL}/transactions/add`, transactionData);
+export const getTransactions = () => axios.get(`${API_URL}/transactions/`);
 
 // Shipments
 export const addShipment = (shipmentData) => axios.post(`${API_URL}/shipments/add`, shipmentData);
-export const getShipments = () => axios.get(`${API_URL}/shipments/`);
-
-// Contract Events
-export const getContractEvents = () => axios.get(`${API_URL}/contract-events/`);
+export const updateShipmentStatus = async (updateData) => {
+    return await axios.post(`${API_URL}/shipments/update`, updateData, {
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+export const getAllShipments = () => axios.get(`${API_URL}/shipments/`);

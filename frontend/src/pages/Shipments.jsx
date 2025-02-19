@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addShipment, getShipments } from "../services/api";
+import { addShipment, getAllShipments, updateShipmentStatus } from "../services/api";
 import { toast } from "react-toastify";
 
 const Shipments = () => {
@@ -11,13 +11,18 @@ const Shipments = () => {
     trackingId: "",
   });
 
+  const [updateData, setUpdateData] = useState({
+    trackingId: "",
+    status: "",
+  });
+
   useEffect(() => {
     fetchShipments();
   }, []);
 
   const fetchShipments = async () => {
     try {
-      const response = await getShipments();
+      const response = await getAllShipments();
       setShipments(response.data);
     } catch (error) {
       console.error("Error fetching shipments:", error);
@@ -41,6 +46,28 @@ const Shipments = () => {
       console.error(error);
     }
   };
+
+  const handleUpdateShipmentStatus = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("Updating shipment:", updateData);
+  
+      const response = await updateShipmentStatus({
+        trackingId: updateData.trackingId,
+        status: updateData.status,
+      });
+  
+      console.log("Update Response:", response.data); // Debugging
+  
+      toast.success("Shipment status updated successfully!");
+      fetchShipments(); // Refresh shipment list
+      setUpdateData({ trackingId: "", status: "" }); // Reset form
+    } catch (error) {
+      console.error("Error updating shipment:", error.response || error);
+      toast.error("Error updating shipment status");
+    }
+  };
+  
 
   return (
     <div className="container mx-auto p-6">
@@ -84,6 +111,31 @@ const Shipments = () => {
           Create Shipment
         </button>
       </form>
+
+      {/* Update Shipment Status Form */}
+      <h3 className="text-xl font-bold mb-2">Update Shipment Status</h3>
+      <form onSubmit={handleUpdateShipmentStatus} className="space-y-4 mb-6">
+        <input
+          type="text"
+          placeholder="Tracking ID"
+          className="border p-2 w-full"
+          value={updateData.trackingId}
+          onChange={(e) => setUpdateData({ ...updateData, trackingId: e.target.value })}
+          required
+        />
+        <input
+          type="text"
+          placeholder="New Status"
+          className="border p-2 w-full"
+          value={updateData.status}
+          onChange={(e) => setUpdateData({ ...updateData, status: e.target.value })}
+          required
+        />
+        <button type="submit" className="bg-green-500 text-white p-2 w-full">
+          Update Shipment Status
+        </button>
+      </form>
+
 
       {/* Shipments List */}
       <h3 className="text-xl font-bold mb-2">Shipments List</h3>
