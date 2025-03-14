@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getMedicines } from "../services/api";
-import { Link } from "react-router-dom";
 
 const MedicineList = () => {
   const [medicines, setMedicines] = useState([]);
@@ -29,10 +28,9 @@ const MedicineList = () => {
         <ul className="space-y-4">
           {medicines.map((medicine) => (
             <li key={medicine._id} className="border p-4">
-              <h3 className="text-lg font-bold">{medicine.name}</h3>
-              <p>{medicine.description}</p>
+              <h3 className="text-lg font-semibold">{medicine.name}</h3>
+              <p><strong>Description:</strong> {medicine.description}</p>
               <p><strong>Stage:</strong> {medicine.stage}</p>
-              <Link to={`/medicines/${medicine._id}`} className="text-blue-500">View Details</Link>
             </li>
           ))}
         </ul>

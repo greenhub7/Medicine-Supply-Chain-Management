@@ -43,8 +43,8 @@ const Participants = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Manage Participants</h2>
+    <div className="container mx-auto mt-10">
+      <h2 className="text-3xl font-bold mb-4">Manage Participants</h2>
 
       {/* Participant Form */}
       <form onSubmit={handleAddParticipant} className="space-y-4 mb-6">
@@ -84,13 +84,13 @@ const Participants = () => {
           onChange={(e) => setFormData({ ...formData, address: e.target.value })}
           required
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 w-full">
+        <button type="submit" className="bg-green-500 hover:bg-green-600 transition-all text-white p-2 w-full">
           Add Participant
         </button>
       </form>
 
       {/* Participants List */}
-      <h3 className="text-xl font-bold mb-2">Participants List</h3>
+      <h3 className="text-2xl font-semibold mb-2">Participants List</h3>
       <ul className="space-y-2">
         {participants.length === 0 ? (
           <p>No participants found.</p>

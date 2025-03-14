@@ -62,11 +62,11 @@ const Medicine = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Manage Medicines</h2>
+    <div className="container mx-auto mt-10">
+      <h2 className="text-3xl font-bold mb-6">Manage Medicines</h2>
 
       {/* Medicine List */}
-      <h3 className="text-xl font-bold mb-2">Medicine List</h3>
+      <h3 className="text-2xl font-semibold mb-4">Medicine List</h3>
       <ul className="space-y-2">
         {medicines.length === 0 ? <p>No medicines found.</p> : medicines.map((med) => (
           <li key={med.blockchainId} className="border p-4">
@@ -80,12 +80,12 @@ const Medicine = () => {
 
       {/* Medicine History & Stage */}
       <div className="mt-6">
-        <h3 className="text-xl font-bold mb-2">Medicine Actions</h3>
-        <div className="flex space-x-2">
+        <h3 className="text-2xl font-semibold mb-4">Medicine Actions</h3>
+        <div className="flex space-x-3 mb-6">
           <input type="text" placeholder="Enter Medicine ID" className="border p-2 w-full"
             value={medicineId} onChange={(e) => setMedicineId(e.target.value)} required />
-          <button onClick={handleGetHistory} className="bg-green-500 text-white p-2">Get History</button>
-          <button onClick={handleGetStage} className="bg-blue-500 text-white p-2">Get Stage</button>
+          <button onClick={handleGetHistory} className="bg-green-500 hover:bg-green-600 transition-all text-white p-2">Get History</button>
+          <button onClick={handleGetStage} className="bg-blue-500 hover:bg-blue-600 transition-all text-white p-2">Get Stage</button>
         </div>
 
         {/* Display Medicine Stage */}
@@ -97,7 +97,7 @@ const Medicine = () => {
         )}
 
         {/* Display Medicine History */}
-        <h4 className="text-lg font-semibold mt-4">Medicine History</h4>
+        <h4 className="text-2xl font-semibold mt-4">Medicine History</h4>
         <ul className="mt-2 space-y-2">
           {medicineHistory.length === 0 ? <p>No history found.</p> : medicineHistory.map((txn, index) => (
             <li key={index} className="border p-3">

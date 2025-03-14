@@ -57,7 +57,7 @@ const AddMedicine = () => {
           value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
         <input type="text" placeholder="Description" className="border p-2 w-full"
           value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
-        <button type="submit" className="bg-blue-500 text-white p-2 w-full">Add Medicine</button>
+        <button type="submit" className="bg-green-500 hover:bg-green-600 text-white p-2 w-full transition-all">Add Medicine</button>
       </form>
     </div>
   );

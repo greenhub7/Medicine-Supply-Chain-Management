@@ -53,11 +53,11 @@ const Transactions = () => {
   // };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto mt-10">
       <h2 className="text-2xl font-bold mb-4">Manage Transactions</h2>
 
       {/* Transaction Form */}
-      <form onSubmit={handleAddTransaction} className="space-y-4 mb-6">
+      <form onSubmit={handleAddTransaction} className="space-y-4 mb-8">
         <input
           type="text"
           placeholder="Medicine ID"
@@ -94,13 +94,13 @@ const Transactions = () => {
           <option value="In Transit">In Transit</option>
           <option value="Completed">Completed</option>
         </select>
-        <button type="submit" className="bg-blue-500 text-white p-2 w-full">
+        <button type="submit" className="bg-green-500 hover:bg-green-600 transition-all text-white p-2 w-full">
           Add Transaction
         </button>
       </form>
 
       {/* Transactions List */}
-      <h3 className="text-xl font-bold mb-2">Transactions List</h3>
+      <h3 className="text-2xl font-semibold mb-4">Transactions List</h3>
       <ul className="space-y-2">
         {transactions.length === 0 ? (
           <p>No transactions found.</p>
