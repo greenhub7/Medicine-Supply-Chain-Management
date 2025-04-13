@@ -21,9 +21,9 @@ const AddMedicine = () => {
         name: "",
         description: "",
       });
-      toast.success("Medicine added successfully!");
+      alert("Medicine added successfully!");
     } catch (error) {
-      toast.error("Error adding medicine");
+      alert("Error adding medicine");
       console.error(error);
     }
   };
@@ -40,15 +40,8 @@ const AddMedicine = () => {
   // };
 
   return (
-    <div className="container mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-4">Add Medicine</h2>
-      {/* <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="text" placeholder="Name" className="border p-2 w-full"
-          value={name} onChange={(e) => setName(e.target.value)} required />
-        <textarea placeholder="Description" className="border p-2 w-full"
-          value={description} onChange={(e) => setDescription(e.target.value)} required />
-        <button type="submit" className="bg-blue-500 text-white p-2 w-full">Submit</button>
-      </form> */}
+    <div className="container mx-auto mt-10 p-6">
+      <h2 className="text-3xl font-bold mb-4">Add Medicine</h2>
 
       <form onSubmit={handleAddMedicine} className="space-y-4 mb-6">
         <input type="text" placeholder="ID" className="border p-2 w-full"

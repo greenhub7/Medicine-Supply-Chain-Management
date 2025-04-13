@@ -43,7 +43,7 @@ const Participants = () => {
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 p-6">
       <h2 className="text-3xl font-bold mb-4">Manage Participants</h2>
 
       {/* Participant Form */}

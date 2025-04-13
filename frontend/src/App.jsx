@@ -7,14 +7,12 @@ import Medicine from "./pages/MedicineDetails";
 import Participants from "./pages/Participants";
 import Transactions from "./pages/Transactions";
 import Shipments from "./pages/Shipments";
-// import AssignMedicine from "./pages/AssignMedicine";
+import image from './assets/home.jpg';
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <div className="min-h-screen bg-gray-900 text-white">
-        <div className="p-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/add-medicine" element={<AddMedicine />} />
@@ -23,10 +21,7 @@ function App() {
             <Route path="/participants" element={<Participants />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/shipments" element={<Shipments />} />
-            {/* <Route path="/assign-medicine" element={<AssignMedicine />} /> */}
           </Routes>
-        </div>
-      </div>
     </Router>
   );
 }

@@ -53,8 +53,8 @@ const Transactions = () => {
   // };
 
   return (
-    <div className="container mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-4">Manage Transactions</h2>
+    <div className="container mx-auto mt-10 p-6">
+      <h2 className="text-3xl font-bold mb-4">Manage Transactions</h2>
 
       {/* Transaction Form */}
       <form onSubmit={handleAddTransaction} className="space-y-4 mb-8">
