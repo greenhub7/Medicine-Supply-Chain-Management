@@ -1,6 +1,5 @@
 const Shipment = require("../models/Shipment");
 
-// @desc   Create a new shipment in MongoDB
 exports.createShipment = async (req, res) => {
   try {
     const { medicineId, sender, receiver, trackingId } = req.body;
@@ -42,7 +41,6 @@ exports.updateShipmentStatus = async (req, res) => {
   }
 };
 
-// @desc   Get all shipments
 exports.getAllShipments = async (req, res) => {
   try {
     const shipments = await Shipment.find();

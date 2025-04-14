@@ -1,17 +1,11 @@
 import { useState, useEffect } from "react";
-import { addMedicine, getMedicines, getMedicineStage, getMedicineHistory } from "../services/api";
-import { toast } from "react-toastify";
+import { getMedicines, getMedicineStage, getMedicineHistory } from "../services/api";
 
 const Medicine = () => {
   const [medicines, setMedicines] = useState([]);
   const [medicineId, setMedicineId] = useState("");
   const [medicineHistory, setMedicineHistory] = useState([]);
   const [medicineStage, setMedicineStage] = useState("");
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    ownerAddress: "",
-  });
 
   useEffect(() => {
     fetchMedicines();
@@ -22,33 +16,24 @@ const Medicine = () => {
       const response = await getMedicines();
       setMedicines(response.data);
     } catch (error) {
+      alert("Error fetching medicines");
       console.error("Error fetching medicines:", error);
     }
   };
 
-  // const handleAddMedicine = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await addMedicine(formData);
-  //     toast.success("Medicine added successfully!");
-  //     fetchMedicines();
-  //     setFormData({
-  //       name: "",
-  //       description: "",
-  //       ownerAddress: "",
-  //     });
-  //   } catch (error) {
-  //     toast.error("Error adding medicine");
-  //     console.error(error);
-  //   }
-  // };
-
   const handleGetHistory = async () => {
     try {
       const response = await getMedicineHistory(medicineId);
+
+      if(response.data.length === 0){
+        alert("No transaction history found");
+        return;
+      }
+
       setMedicineHistory(response.data);
+      alert("Medicine transaction history available");
     } catch (error) {
-      toast.error("Error fetching medicine history");
+      alert("Error fetching medicine history");
     }
   };
 
@@ -56,13 +41,14 @@ const Medicine = () => {
     try {
       const response = await getMedicineStage(medicineId);
       setMedicineStage(response.data.stage);
+      alert("Medicine stage displayed");
     } catch (error) {
-      toast.error("Error fetching medicine stage");
+      alert("Error fetching medicine stage");
     }
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 p-6">
       <h2 className="text-3xl font-bold mb-6">Manage Medicines</h2>
 
       {/* Medicine List */}

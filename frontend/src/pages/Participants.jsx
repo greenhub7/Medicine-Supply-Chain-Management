@@ -28,7 +28,7 @@ const Participants = () => {
     e.preventDefault();
     try {
       await addParticipant(formData);
-      toast.success("Participant added successfully!");
+      alert("Participant added successfully!");
       fetchParticipants();
       setFormData({
         name: "",
@@ -37,13 +37,13 @@ const Participants = () => {
         address: "",
       });
     } catch (error) {
-      toast.error("Error adding participant");
+      alert("Error adding participant");
       console.error(error);
     }
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10 p-6">
       <h2 className="text-3xl font-bold mb-4">Manage Participants</h2>
 
       {/* Participant Form */}

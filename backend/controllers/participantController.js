@@ -5,7 +5,6 @@ require("dotenv").config();
 const ownerAddress = process.env.OWNER_ADDRESS;
 const ownerPrivateKey = process.env.OWNER_PRIVATE_KEY;
 
-// Helper function to register participant on blockchain
 const registerParticipant = async (role, address, name, location) => {
   const nonce = await web3js.eth.getTransactionCount(ownerAddress);
   const gasPrice = await web3js.eth.getGasPrice();
@@ -46,9 +45,8 @@ exports.addParticipant = async (req, res) => {
 
     const receipt = await registerParticipant(role, address, name, location);
 
-    // Save in MongoDB
     const participant = new Participant({
-      blockchainId: receipt.transactionHash, // Store transaction hash as unique ID
+      blockchainId: receipt.transactionHash,
       address,
       name,
       location,
@@ -69,7 +67,6 @@ exports.addParticipant = async (req, res) => {
   }
 };
 
-// @desc Get all participants
 exports.getAllParticipants = async (req, res) => {
   try {
     const participants = await Participant.find();
