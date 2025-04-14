@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { recordTransaction, getTransactions } from "../services/api";
-import { toast } from "react-toastify";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
@@ -36,21 +35,12 @@ const Transactions = () => {
         action: "",
         timestamp: Date.now(),
       });
-      toast.success("Transaction recorded successfully!");
+      alert("Transaction recorded successfully!");
     } catch (error) {
-      toast.error("Error adding transaction");
+      alert("Error adding transaction");
       console.error(error);
     }
   };
-
-  // const handleGetHistory = async () => {
-  //   try {
-  //     const response = await getTransactionHistory(medicineId);
-  //     setTransactionHistory(response.data);
-  //   } catch (error) {
-  //     toast.error("Error fetching transaction history");
-  //   }
-  // };
 
   return (
     <div className="container mx-auto mt-10 p-6">
@@ -74,14 +64,6 @@ const Transactions = () => {
           onChange={(e) => setFormData({ ...formData, participant: e.target.value })}
           required
         />
-        {/* <input
-          type="text"
-          placeholder="Receiver Address"
-          className="border p-2 w-full"
-          value={formData.to}
-          onChange={(e) => setFormData({ ...formData, to: e.target.value })}
-          required
-        /> */}
         <select
           className="border p-2 w-full"
           value={formData.action}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { addShipment, getAllShipments, updateShipmentStatus } from "../services/api";
-import { toast } from "react-toastify";
 
 const Shipments = () => {
   const [shipments, setShipments] = useState([]);
@@ -33,7 +32,7 @@ const Shipments = () => {
     e.preventDefault();
     try {
       await addShipment(formData);
-      toast.success("Shipment created successfully!");
+      alert("Shipment created successfully!");
       fetchShipments();
       setFormData({
         medicineId: "",
@@ -42,7 +41,7 @@ const Shipments = () => {
         trackingId: "",
       });
     } catch (error) {
-      toast.error("Error creating shipment");
+      alert("Error creating shipment");
       console.error(error);
     }
   };
@@ -57,14 +56,12 @@ const Shipments = () => {
         status: updateData.status,
       });
   
-      console.log("Update Response:", response.data); // Debugging
-  
-      toast.success("Shipment status updated successfully!");
-      fetchShipments(); // Refresh shipment list
-      setUpdateData({ trackingId: "", status: "" }); // Reset form
+      alert("Shipment status updated successfully!");
+      fetchShipments();
+      setUpdateData({ trackingId: "", status: "" });
     } catch (error) {
+      alert("Error updating shipment status");
       console.error("Error updating shipment:", error.response || error);
-      toast.error("Error updating shipment status");
     }
   };
   
@@ -123,14 +120,17 @@ const Shipments = () => {
           onChange={(e) => setUpdateData({ ...updateData, trackingId: e.target.value })}
           required
         />
-        <input
-          type="text"
-          placeholder="New Status"
+        <select
           className="border p-2 w-full"
           value={updateData.status}
           onChange={(e) => setUpdateData({ ...updateData, status: e.target.value })}
           required
-        />
+        >
+          <option value="">Select Status</option>
+          <option value="Pending">Pending</option>
+          <option value="InTransit">In-Transit</option>
+          <option value="Delivered">Delivered</option>
+        </select>
         <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 transition-all text-white p-2 w-full">
           Update Shipment Status
         </button>

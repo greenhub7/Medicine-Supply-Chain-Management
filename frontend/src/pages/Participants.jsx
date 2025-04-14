@@ -28,7 +28,7 @@ const Participants = () => {
     e.preventDefault();
     try {
       await addParticipant(formData);
-      toast.success("Participant added successfully!");
+      alert("Participant added successfully!");
       fetchParticipants();
       setFormData({
         name: "",
@@ -37,7 +37,7 @@ const Participants = () => {
         address: "",
       });
     } catch (error) {
-      toast.error("Error adding participant");
+      alert("Error adding participant");
       console.error(error);
     }
   };
