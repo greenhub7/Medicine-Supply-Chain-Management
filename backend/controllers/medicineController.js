@@ -5,27 +5,23 @@ const { web3js, contract } = require("../config/web3");
 const ownerAddress = process.env.OWNER_ADDRESS;
 
 if (!ownerAddress) {
-  console.error("❌ OWNER_ADDRESS is not defined in environment variables");
+  console.error("OWNER_ADDRESS is not defined in environment variables");
   process.exit(1);
 }
 
-// @desc   Add medicine to Blockchain & MongoDB
 exports.addMedicine = async (req, res) => {
   try {
-    const { id, name, description } = req.body;
+    const { name, description, stage } = req.body;
 
-    if (!name || !description || !id) {
+    if (!name || !description) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Get nonce & gas price
     const nonce = await web3js.eth.getTransactionCount(ownerAddress);
     const gasPrice = await web3js.eth.getGasPrice();
 
-    // Encode the function call for `addMedicine`
-    const data = contract.methods.addMedicine(name, description).encodeABI();
+    const data = contract.methods.addMedicine(name, description, stage).encodeABI();
 
-    // Create transaction object
     const tx = {
       from: ownerAddress,
       to: contract.options.address,
@@ -35,29 +31,27 @@ exports.addMedicine = async (req, res) => {
       data: data,
     };
 
-    // Sign and send transaction
     const signedTx = await web3js.eth.accounts.signTransaction(tx, process.env.OWNER_PRIVATE_KEY);
     const receipt = await web3js.eth.sendSignedTransaction(signedTx.rawTransaction);
 
-    // Get latest medicine ID from contract
     const medicineCounter = await contract.methods.medicineCounter().call();
 
-    // Save in MongoDB
     const medicine = new Medicine({
       blockchainId: parseInt(medicineCounter),
       name,
       description,
-      stage: "Ordered",
+      stage: stage || "Ordered",
     });
 
     await medicine.save();
 
-    // Record transaction
     const transaction = new Transaction({
       medicineId: medicine.blockchainId,
-      transactionType: "MEDICINE_CREATED",
+      participant: ownerAddress,
+      action: "MEDICINE_CREATED",
       transactionHash: receipt.transactionHash,
       details: { medicine: medicine._id },
+      timestamp: Date.now()
     });
 
     await transaction.save();
@@ -70,7 +64,6 @@ exports.addMedicine = async (req, res) => {
   }
 };
 
-// @desc   Get all medicines
 exports.getAllMedicines = async (req, res) => {
   try {
     const medicines = await Medicine.find();
@@ -81,7 +74,6 @@ exports.getAllMedicines = async (req, res) => {
   }
 };
 
-// @desc   Get medicine history
 exports.getMedicineHistory = async (req, res) => {
   try {
     const transactions = await Transaction.find({ medicineId: req.params.id }).sort({ timestamp: -1 });
@@ -91,7 +83,6 @@ exports.getMedicineHistory = async (req, res) => {
   }
 };
 
-// @desc   Get medicine stage from Blockchain
 exports.getMedicineStage = async (req, res) => {
   try {
     const medicineId = req.params.id;

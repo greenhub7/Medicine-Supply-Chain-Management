@@ -72,18 +72,3 @@ exports.recordTransaction = async (req, res) => {
       res.status(500).json({ message: 'Error recording transaction', error });
   }
 };
-
-// @desc   Get medicine transaction history
-// exports.getTransactionHistory = async (req, res) => {
-//   try {
-//     const transactions = await Transaction.find({ medicineId: req.params.id }).sort({ timestamp: -1 });
-
-//     if (!transactions.length) {
-//       return res.status(404).json({ error: "No transactions found for this medicine" });
-//     }
-
-//     res.json(transactions);
-//   } catch (error) {
-//     res.status(500).json({ error: "Error fetching medicine history" });
-//   }
-// };
