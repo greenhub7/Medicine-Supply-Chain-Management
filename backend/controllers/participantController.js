@@ -35,7 +35,6 @@ const registerParticipant = async (role, address, name, location) => {
   return await web3js.eth.sendSignedTransaction(signedTx.rawTransaction);
 };
 
-// @desc Add a participant (Supplier, Manufacturer, Distributor, Retailer)
 exports.addParticipant = async (req, res) => {
   try {
     const { address, name, location, role } = req.body;
