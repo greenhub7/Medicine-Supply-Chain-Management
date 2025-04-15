@@ -25,10 +25,10 @@ body {
 }
 
 /* Headings */
-h1, h2, h3, h4, h5, h6 {
+/* h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: #ffffff;
-}
+} */
 
 /* Buttons */
 button {
@@ -38,7 +38,7 @@ button {
   font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
-  color: white;
+  /* color: white; */
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
