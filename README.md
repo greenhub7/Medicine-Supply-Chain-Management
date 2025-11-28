@@ -23,8 +23,8 @@ Written in Solidity, the smart contract allows:
 
 1. Clone the repository
 ```bash
-git clone https://github.com/Harshvardhan2164/Supply-Chain-Management-using-Blockchain-Technology.git
-cd Supply-Chain-Management-using-Blockchain-Technology
+git clone https://github.com/greenhub/Medicine-Supply-Chain-Management.git
+cd Medicine-Supply-Chain-Management
 ```
 
 2. Setup MongoDB Atlas
@@ -85,12 +85,6 @@ npm run dev
 2. QR Code Tracking
 3. IPFS Integration for reports
 4. Email Notifications
-
-## Contributors
-
-1. [Harshvardhan Sharma](https://github.com/Harshvardhan2164)
-2. [Ankit Agrawal](https://github.com/ItsmeAnkit525)
-3. [Vansh Jangir](https://github.com/vanshjangir)
 
 ## License
 This project is licensed under the MIT License.
