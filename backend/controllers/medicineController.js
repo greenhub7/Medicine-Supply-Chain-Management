@@ -20,7 +20,18 @@ exports.addMedicine = async (req, res) => {
     const nonce = await web3js.eth.getTransactionCount(ownerAddress);
     const gasPrice = await web3js.eth.getGasPrice();
 
-    const data = contract.methods.addMedicine(name, description, stage).encodeABI();
+    // Convert stage string to enum number (0=Ordered, 1=RawMaterialSupplied, etc.)
+    const stageMap = {
+      "Ordered": 0,
+      "RawMaterialSupplied": 1,
+      "Manufactured": 2,
+      "Distributed": 3,
+      "Retail": 4,
+      "Sold": 5
+    };
+    const stageValue = stageMap[stage] !== undefined ? stageMap[stage] : 0;
+    
+    const data = contract.methods.addMedicine(name, description, stageValue).encodeABI();
 
     const tx = {
       from: ownerAddress,

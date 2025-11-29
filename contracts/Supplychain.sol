@@ -94,7 +94,7 @@ contract SupplyChain {
     event TransactionRecorded(uint256 indexed medicineId, string action, address participant);
 
     // Add new medicine (only owner)
-    function addMedicine(string memory _name, string memory _description) public onlyOwner {
+    function addMedicine(string memory _name, string memory _description, Stage _stage) public onlyOwner {
         medicineCounter++;
         medicines[medicineCounter] = Medicine(
             medicineCounter,
@@ -104,7 +104,7 @@ contract SupplyChain {
             address(0),  // No manufacturer assigned yet
             address(0),  // No distributor assigned yet
             address(0),  // No retailer assigned yet
-            Stage.Ordered
+            _stage
         );
 
         emit MedicineAdded(medicineCounter, _name);

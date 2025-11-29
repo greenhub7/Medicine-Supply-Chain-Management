@@ -30,6 +30,6 @@ app.get("/", (req, res) => {
   res.send("Supply Chain Management API Running...");
 });
 
-serverCheck();
+// serverCheck();
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
